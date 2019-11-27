@@ -8,12 +8,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class WebprojectApplicationTests {
 
-    @Autowired
-    CarRegisterService carRegisterService;
-
-    @Test
-    void contextLoads() throws Exception {
-        System.out.println(carRegisterService.findAllCarInfo().toString());
-    }
-
 }
