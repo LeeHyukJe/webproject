@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.leehyukje.webproject.persistence.CarRegisterDAO">
+    <insert id="carRegister">
+        insert into CARREGISTER values(#{productsTitle},#{price},#{description},#{modelYear},#{carMileage},#{smokingOptions})
+    </insert>
+    <select id="findAll" resultType="com.leehyukje.webproject.domain.CarRegisterDTO">
+        select * from CARREGISTER
+    </select>
+    <select id="findOne" resultType="com.leehyukje.webproject.domain.CarRegisterDTO">
+        select * from CARREGISTER where PRODUCTSTITLE=#{productsTitle}
+    </select>
+</mapper>
