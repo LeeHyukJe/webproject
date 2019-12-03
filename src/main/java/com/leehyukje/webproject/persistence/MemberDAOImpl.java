@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
-    protected final String NAMESPACE = "com.leehyukje.webproject.persistence.MemberDAO";
+    private final String NAMESPACE = "com.leehyukje.webproject.persistence.MemberDAO";
 
     @Autowired
     public SqlSession sqlSession;
     @Override
     public MemberVO readOne(String uid) throws Exception {
-        return sqlSession.selectOne(NAMESPACE+".test",uid);
+        return sqlSession.selectOne(NAMESPACE+".selectOne",uid);
     }
 
     @Override

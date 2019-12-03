@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
-    @GetMapping("/signin")
-    public void signin() throws Exception{
-
+    @GetMapping("/login")
+    public String signin() throws Exception{
+        return "signin";
     }
 
     @GetMapping("/accessDenied")
