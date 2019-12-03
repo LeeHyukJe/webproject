@@ -5,6 +5,8 @@ import com.leehyukje.webproject.domain.CarRegisterDTO;
 import com.leehyukje.webproject.service.CarRegisterService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @Log
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class CarCategoryController {
 
     @Autowired
@@ -46,6 +49,7 @@ public class CarCategoryController {
     }
 
     // 차량 상세 보기
+    @Secured("ROLE_NORMAL")
     @GetMapping("/carDetail")
     public String carDetatil(@ModelAttribute CarRegisterDTO carRegisterDTO, Model model) throws Exception{
         log.info("selected carModel Info--------------"+carRegisterDTO.toString());

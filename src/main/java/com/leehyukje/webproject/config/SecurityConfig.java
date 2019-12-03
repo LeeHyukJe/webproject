@@ -15,11 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.sql.DataSource;
 
 @Log
 @EnableWebSecurity
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -32,15 +34,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserService customUserService;
 
+    @Autowired
+    private AuthSuccessHandler authSuccessHandler;
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         log.info("security config.......");
 
         http.authorizeRequests().antMatchers("/index/**").permitAll();
         http.authorizeRequests().antMatchers("/item_create").hasRole("NORMAL");
-        http.formLogin().loginPage("/login");
+        http.formLogin().loginPage("/login")
+                .successHandler(authSuccessHandler)
+                .failureHandler(loginFailureHandler);
+        //http.formLogin();
         http.exceptionHandling().accessDeniedPage("/accessDenied");
         http.logout().logoutUrl("/logout").invalidateHttpSession(true);
+
     }
 
     @Bean
@@ -48,8 +59,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws  Exception{
-        log.info("build Auth global......");
-        auth.userDetailsService(customUserService).passwordEncoder(passwordEncoder());
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
+        try{
+            log.info("build Auth global......");
+            auth.userDetailsService(customUserService).passwordEncoder(passwordEncoder());
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

@@ -1,8 +1,8 @@
 package com.leehyukje.webproject.config;
 
 import com.leehyukje.webproject.domain.MemberDTO;
-import com.leehyukje.webproject.domain.MemberRole;
-import com.leehyukje.webproject.domain.MemberVO;
+import com.leehyukje.webproject.domain.MemberRoleVO;
+import lombok.extern.java.Log;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Log
 public class CustomUserDetails implements UserDetails {
     private static final  String ROLE_PREFIX = "ROLE_";
     private String username;
@@ -21,10 +21,11 @@ public class CustomUserDetails implements UserDetails {
         this.username=memberDTO.getUid();
         this.password=memberDTO.getUpw();
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        for(MemberRole memberRole:memberDTO.getFno()){
+        for(MemberRoleVO memberRole:memberDTO.getFno()){
             authorityList.add(new SimpleGrantedAuthority(ROLE_PREFIX+memberRole.getRoleName().toUpperCase()));
         }
         this.authorities=authorityList;
+        log.info("@@@@AuthorityList"+authorities.toString());
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

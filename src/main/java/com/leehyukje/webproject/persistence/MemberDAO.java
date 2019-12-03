@@ -1,6 +1,6 @@
 package com.leehyukje.webproject.persistence;
 
-import com.leehyukje.webproject.domain.MemberRole;
+import com.leehyukje.webproject.domain.MemberRoleVO;
 import com.leehyukje.webproject.domain.MemberVO;
 
 import java.util.List;
@@ -8,5 +8,7 @@ import java.util.List;
 public interface MemberDAO {
 
     MemberVO readOne(String uid) throws Exception;
-    List<MemberRole> readRoleList(String fno) throws Exception;
+    List<MemberRoleVO> readRoleList(String fno) throws Exception;
+    void create(MemberVO memberVO) throws Exception;
+
 }

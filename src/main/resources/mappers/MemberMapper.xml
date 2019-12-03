@@ -10,7 +10,7 @@
         where UID = #{uid}
     </select>
 
-    <select id="selectMemberRoles" resultType="com.leehyukje.webproject.domain.MemberRole">
+    <select id="selectMemberRoles" resultType="com.leehyukje.webproject.domain.MemberRoleVO">
         select *
         from TBL_MEMBER_ROLES
         where FNO = #{fno}
@@ -20,5 +20,15 @@
         select *
         from TBL_MEMBERS
     </select>
+
+    <insert id="userInsert">
+        insert into TBL_MEMBERS(uid, upw, uname, fno)
+        values(#{uid},#{upw},#{uname},#{fno})
+    </insert>
+
+    <insert id="roleInsert">
+        insert into TBL_MEMBER_ROLES(fno, rolename)
+        values (#{fno},#{roleName})
+    </insert>
 
 </mapper>

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberRole {
+public class MemberRoleVO {
     private String fno;
     private String roleName;
 }

@@ -1,6 +1,5 @@
 package com.leehyukje.webproject.domain;
 
-import com.leehyukje.webproject.persistence.MemberDAO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +17,7 @@ public class MemberDTO {
     private String uname;
     private Locale regdate;
     private Locale updatedate;
-    private List<MemberRole> fno;
+    private List<MemberRoleVO> fno;
 
     public MemberDTO(MemberVO memberVO){
         this.uid = memberVO.getUid();

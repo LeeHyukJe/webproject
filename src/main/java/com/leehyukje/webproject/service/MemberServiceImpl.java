@@ -1,7 +1,6 @@
 package com.leehyukje.webproject.service;
 
-import com.leehyukje.webproject.domain.MemberDTO;
-import com.leehyukje.webproject.domain.MemberRole;
+import com.leehyukje.webproject.domain.MemberRoleVO;
 import com.leehyukje.webproject.domain.MemberVO;
 import com.leehyukje.webproject.persistence.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,13 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberRole> readRoleList(String fno) throws Exception {
+    public List<MemberRoleVO> readRoleList(String fno) throws Exception {
         return memberDAO.readRoleList(fno);
     }
+
+    @Override
+    public void create(MemberVO memberVO) throws Exception {
+        memberDAO.create(memberVO);
+    }
+
 }
