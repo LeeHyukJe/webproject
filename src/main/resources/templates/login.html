@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar nav-global nav-global-sign navbar-expand-sm">
     <div class="container d-flex justify-content-center">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/index">
             <img class="img-brand" alt="당근마켓" width="132" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/header/logo-basic-00b7e471b721ce9db8b0758c05a84684413c8aef1ad54caa0f3fcbe7328c947f.svg">
         </a>
     </div>
@@ -22,16 +22,20 @@
     <form class="form-sign" action="/login" method="POST">
         <h5 class="form-headline">🥕 로그인 🐰</h5>
         <div class="form-group">
-            <input type="text" class="form-control" id="inputEmail" placeholder="이메일 입력" name="username">
+            
+            <!--/*@thymesVar id="username" type=""*/-->
+            <input type="text" class="form-control" id="inputEmail" placeholder="이메일 입력" name="username" th:value="${username}">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="비밀번호 입력">
+            <!--/*@thymesVar id="password" type=""*/-->
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="비밀번호 입력" th:value="${password}">
         </div>
-        <button class="btn btn-block btn-primary">로그인 하기</button>
-        <a href="signup.html" class="btn btn-block btn-light">계정 만들기</a>
+        <button class="btn btn-block btn-primary" id="submitBtn">로그인 하기</button>
+        <a href="/signup" class="btn btn-block btn-light">계정 만들기</a>
 
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <h6 th:if="${errorMsg!=null}" th:text="${errorMsg}">
+        <!--/*@thymesVar id="errorMsg" type=""*/-->
+        <h6 style="color: darkred" th:if="${errorMsg!=null}" th:text="${errorMsg}">
         </h6>
 
         <h6 class="txt-terms">
@@ -45,13 +49,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js" integrity="sha256-59/apVFrosMLFX2dHZLGvb3nPpu7e0Yx1rsDr1dTRrk=" crossorigin="anonymous"></script>
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var query = [[${errorMsg}]];
-    alert(query);
-    console.log(errorMsg);
-    /*]]>*/
-</script>
+
 
 </body>
 

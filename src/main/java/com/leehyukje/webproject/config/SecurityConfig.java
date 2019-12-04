@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(loginFailureHandler);
         //http.formLogin();
         http.exceptionHandling().accessDeniedPage("/accessDenied");
-        http.logout().logoutUrl("/logout").invalidateHttpSession(true);
+        http.logout().logoutSuccessUrl("/index").invalidateHttpSession(true);
 
     }
 

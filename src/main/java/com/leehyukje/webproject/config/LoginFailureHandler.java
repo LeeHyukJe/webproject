@@ -16,8 +16,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
 
-//        String username = httpServletRequest.getParameter("username");
-//        String password = httpServletRequest.getParameter("password");
+        String username = httpServletRequest.getParameter("username");
+        String password = httpServletRequest.getParameter("password");
 
 
         String errorMsg = null;
@@ -30,9 +30,10 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             errorMsg = "등록된 회원 정보가 없습니다. 회원가입을 하시기 바랍니다 .";
         }
 
-//        httpServletRequest.setAttribute("username",username);
-//        httpServletRequest.setAttribute("password",password);
+        httpServletRequest.setAttribute("username",username);
+        httpServletRequest.setAttribute("password",password);
         httpServletRequest.setAttribute("errorMsg",errorMsg);
+        httpServletRequest.setAttribute("isLogin","false");
         httpServletRequest.getRequestDispatcher("/login?error").forward(httpServletRequest,httpServletResponse);
     }
 }
