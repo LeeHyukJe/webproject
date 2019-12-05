@@ -1,4 +1,4 @@
-package com.leehyukje.webproject.config;
+package com.leehyukje.webproject.security;
 
 import org.h2.tools.Server;
 import org.springframework.boot.context.properties.ConfigurationProperties;

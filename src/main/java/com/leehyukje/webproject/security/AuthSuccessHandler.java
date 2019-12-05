@@ -1,7 +1,6 @@
-package com.leehyukje.webproject.config;
+package com.leehyukje.webproject.security;
 
 import lombok.extern.java.Log;
-import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;

@@ -1,4 +1,4 @@
-package com.leehyukje.webproject.config;
+package com.leehyukje.webproject.security;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;

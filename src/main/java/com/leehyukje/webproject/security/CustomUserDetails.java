@@ -1,4 +1,4 @@
-package com.leehyukje.webproject.config;
+package com.leehyukje.webproject.security;
 
 import com.leehyukje.webproject.domain.MemberDTO;
 import com.leehyukje.webproject.domain.MemberRoleVO;
