@@ -19,6 +19,8 @@
             </a>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+                	<a href="#" onclick="javascript:crawl()"><i class="material-icons ic-create">크롤링</i></a>
+                	<a href="#" onclick="javascript:indexing()"><i class="material-icons ic-create">크롤링 후 색인</i></a>
                     <a th:if="${isLogin==null}" href="/login"><i class="material-icons ic-create">로그인</i></a>
                     <a th:if="${isLogin!=null}" href="/logout"><i class="material-icons ic-create">로그아웃</i></a>
                     <a th:if="${isLogin==null}" href="/signup"><i class="material-icons ic-create">회원가입</i></a>
@@ -56,151 +58,11 @@
                 </div>
             </a>
         </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
-
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
     </ul>
+    
+    <div id="contents">
+    	
+    </div>
 </div>
 
 <footer>
@@ -214,6 +76,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js" integrity="sha256-59/apVFrosMLFX2dHZLGvb3nPpu7e0Yx1rsDr1dTRrk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
 <script>
     // With JQuery
     $("#carYeara").slider({ min: 0, max: 10, value: 0, focus: true });
@@ -222,8 +85,46 @@
     $("#carDistancea").slider({ min: 0, max: 10, value: 0, focus: true });
     $("#sliderCarMileage").slider({ min: 0, max: 10, value: [0, 10], focus: true });
 
+</script>
+
+</script>
+<script id="entry-template" type="text/x-handlebars-template">
+		{{#result}}
+    	<div>제목: {{TITLE}}</div>
+    	<div>내용: {{CONTENT}}</div>
+		<hr>
+    	{{/result}}
+</script>
+
+<script>
+function crawl(){
+	$.ajax({
+		url:"/collectContents?collection=clien",
+		type:'get',
+		dataType:'json',
+		success:function(data){
+			
+			var source = $("#entry-template").html();
+			var template = Handlebars.compile(source);
+			
+			var html = template(data);
+			$('#contents').append(html);
+		}
+	})
+}
 
 
+// 색인하기
+function indexing(){
+	$.ajax({
+		url:"/indexing?targetUrl=https://www.clien.net/service/board/news&pageNum=5",
+		type:"get",
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+		}
+	})
+}
 </script>
 </body>
 </html>

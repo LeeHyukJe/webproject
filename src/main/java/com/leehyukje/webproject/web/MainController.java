@@ -1,6 +1,8 @@
 package com.leehyukje.webproject.web;
 
 import com.leehyukje.webproject.crawal.WebCrawler;
+import com.leehyukje.webproject.search.common.ShRunner;
+
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +25,13 @@ import java.util.concurrent.*;
 public class MainController {
     private final WebCrawler webCrawler;
     private final TaskExecutor taskExecutor;
+    private final ShRunner shRunner;
 
     @Autowired
-    public MainController(WebCrawler webCrawler, TaskExecutor taskExecutor){
+    public MainController(WebCrawler webCrawler, TaskExecutor taskExecutor,ShRunner shRunner){
         this.webCrawler=webCrawler;
         this.taskExecutor = taskExecutor;
+        this.shRunner = shRunner;
     }
 
     @GetMapping("/index")
@@ -46,6 +51,7 @@ public class MainController {
         ResponseEntity<String> entity = null;
         try {
             CompletableFuture<String> content = webCrawler.crawlingToJson("https://www.clien.net/service/board/news", 5);
+            
             entity = new ResponseEntity<>(content.get(), HttpStatus.OK);
             return entity;
         } catch (IOException e) {
@@ -57,6 +63,20 @@ public class MainController {
             e.printStackTrace();
             return entity = new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @GetMapping("/indexing")
+    public ResponseEntity<String> indexing(@RequestParam String targetUrl, @RequestParam int pageNum){
+    	ResponseEntity<String> entity=null;
+    	try {
+    		webCrawler.crawlingToFile(targetUrl, pageNum);
+    		log.info("result"+shRunner.execCommand("C:\\wisenut\\sf-1\\batch\\static\\stc_clien.cmd").toString());
+    		entity = new ResponseEntity<>("success",HttpStatus.OK);
+    		return entity;
+    	}catch(Exception e) {
+    		entity = new ResponseEntity<>(e.getStackTrace().toString(),HttpStatus.BAD_REQUEST);
+    		return entity;
+    	}
     }
 
 //    @GetMapping("/indexAjax")

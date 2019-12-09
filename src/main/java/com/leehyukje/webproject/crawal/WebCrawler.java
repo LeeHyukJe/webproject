@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -66,7 +67,9 @@ public class WebCrawler {
         File file = null;
         BufferedWriter bufferedWriter = null;
         try{
-            file = new File("//Users/leehyukje/Desktop/B-00-201912031729-01222-I-C.SCD");
+        	Date date = new Date();
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm-ssS");
+            file = new File("C:\\wisenut\\sf-1\\collection\\clien\\scd\\static\\B-00-"+dateFormat.format(date)+"-I-C.SCD");
             bufferedWriter = new BufferedWriter(new FileWriter(file));
             for(int i=0;i<pageNum;i++) { //페이지
                 String URL = targetUrl + "?po="+i;
@@ -142,7 +145,7 @@ public class WebCrawler {
             }
             generator.writeEndArray();
             generator.writeEndObject();
-            log.info(i+"페이지 수집 중....");
+            log.info((i+1)+"페이지 수집 중....");
         }
         generator.writeEndArray();
 
@@ -156,12 +159,12 @@ public class WebCrawler {
 
     public static void main(String[] args) throws Exception {
         WebCrawler webCrawler = new WebCrawler();
-//        System.out.println(webCrawler.crawling("https://www.clien.net/service/board/news",5).toString());
+////        System.out.println(webCrawler.crawling("https://www.clien.net/service/board/news",5).toString());
         System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
-        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
-        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
-        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get().toString());
-        //webCrawler.crawlingToFile("https://www.clien.net/service/board/news",5);
+//        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
+//        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
+//        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get().toString());
+       // webCrawler.crawlingToFile("https://www.clien.net/service/board/news",5);
     }
 
 }
