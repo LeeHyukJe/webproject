@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.java.Log;
+
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
 
 @Service
 @Log
@@ -63,13 +66,15 @@ public class WebCrawler {
     }
 
 
+    
     public void crawlingToFile(String targetUrl,int pageNum) throws IOException {
         File file = null;
         BufferedWriter bufferedWriter = null;
+        Date date = new Date();
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm-ssS");
         try{
-        	Date date = new Date();
-        	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm-ssS");
-            file = new File("C:\\wisenut\\sf-1\\collection\\clien\\scd\\static\\B-00-"+dateFormat.format(date)+"-I-C.SCD");
+        	String completed="-I-F.SCD";
+            file = new File("C:\\wisenut\\sf-1\\collection\\clien\\scd\\static\\B-00-"+dateFormat.format(date)+completed);
             bufferedWriter = new BufferedWriter(new FileWriter(file));
             for(int i=0;i<pageNum;i++) { //페이지
                 String URL = targetUrl + "?po="+i;
@@ -91,8 +96,10 @@ public class WebCrawler {
 
                 }
 
-                System.out.println(i+"페이지 수집 중....");
+                System.out.println((i+1)+"페이지 수집 중....");
+                
             }
+            
 
         }catch (IOException io){
             io.printStackTrace();
@@ -101,7 +108,10 @@ public class WebCrawler {
             e.printStackTrace();
         }finally {
             bufferedWriter.close();
-
+            if(file.exists()) {
+            	FileUtils.copyFile(file, new File("C:\\wisenut\\sf-1\\collection\\clien\\scd\\static\\B-00-"+dateFormat.format(date)+"-I-C.SCD"));
+            	file.delete();
+            }
         }
     }
 
@@ -160,11 +170,11 @@ public class WebCrawler {
     public static void main(String[] args) throws Exception {
         WebCrawler webCrawler = new WebCrawler();
 ////        System.out.println(webCrawler.crawling("https://www.clien.net/service/board/news",5).toString());
-        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
+        //System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
 //        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
 //        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get());
 //        System.out.println(webCrawler.crawlingToJson("https://www.clien.net/service/board/news",5).get().toString());
-       // webCrawler.crawlingToFile("https://www.clien.net/service/board/news",5);
+        webCrawler.crawlingToFile("https://www.clien.net/service/board/news",1);
     }
 
 }
