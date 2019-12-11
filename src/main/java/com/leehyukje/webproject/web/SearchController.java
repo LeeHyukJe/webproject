@@ -18,11 +18,9 @@ import lombok.extern.java.Log;
 @Log
 public class SearchController {
 	
-	private final WebCrawler webCrawler;
 	private final SearchService searchService;
 	private final ResultService resultService;
-	public SearchController (WebCrawler webCrawler ,SearchService searchService, ResultService resultService) {
-		this.webCrawler = webCrawler;
+	public SearchController (SearchService searchService, ResultService resultService) {
 		this.searchService = searchService;
 		this.resultService = resultService;
 	}
@@ -39,16 +37,6 @@ public class SearchController {
 			return null;
 		}
 	}
-//	@GetMapping("/crawlContentsToJson")
-//	public String collectData(SrchParamVO srchParamVO, @RequestParam int pageNum) throws Exception {
-//		try {
-//			String result = webCrawler.crawlingToJson("https://www.clien.net/service/board/news", pageNum);
-//			log.info(result);
-//			return result;
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
+
+
 }
