@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Test;
@@ -65,6 +67,14 @@ class WebprojectApplicationTests {
 		String indexngLog = shRunner.execCommand(executePath).get(1).toString();
 		log.info(indexngLog);
 		assertThat(indexngLog,is("error"));
+	}
+
+	@Test
+	public void regexTest(){
+		String targetRex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+		Pattern regex = Pattern.compile(targetRex);
+		Matcher matcher = regex.matcher("lims2733@naver.com");
+		assertThat(matcher.find(),is(true));
 	}
 
 }

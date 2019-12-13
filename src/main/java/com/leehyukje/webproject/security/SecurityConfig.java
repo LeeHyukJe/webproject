@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("security config.......");
 
         http.authorizeRequests().antMatchers("/index/**").permitAll();
-        http.authorizeRequests().antMatchers("/item_create").hasRole("NORMAL");
+        http.authorizeRequests().antMatchers("/item_create").hasAnyRole("NORMAL,MANAGER");
         http.formLogin().loginPage("/login")
                 .successHandler(authSuccessHandler)
                 .failureHandler(loginFailureHandler);

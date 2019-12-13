@@ -5,14 +5,16 @@ import com.leehyukje.webproject.domain.MemberVO;
 import com.leehyukje.webproject.persistence.MemberDAO;
 import com.leehyukje.webproject.service.MemberRoleService;
 import com.leehyukje.webproject.service.MemberService;
+import com.leehyukje.webproject.validator.LoginValidator;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,17 +24,23 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
     private final MemberRoleService memberRoleService;
+    private final LoginValidator loginValidator;
 
     @Autowired
     public LoginController (PasswordEncoder passwordEncoder,
                             MemberService memberService,
-                            MemberRoleService memberRoleService){
+                            MemberRoleService memberRoleService,
+                            LoginValidator loginValidator){
         this.passwordEncoder=passwordEncoder;
         this.memberService = memberService;
         this.memberRoleService= memberRoleService;
+        this.loginValidator = loginValidator;
     }
 
-
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.setValidator(loginValidator);
+    }
 
     @RequestMapping("/login")
     public void login() throws Exception{
@@ -57,21 +65,29 @@ public class LoginController {
     }
 
     @PostMapping("/join")
-    public String joinPost(@ModelAttribute MemberVO memberVO){
+    public String joinPost(@ModelAttribute @Validated MemberVO memberVO, BindingResult result, Model model){
         try{
-            log.info("회원가입!!"+memberVO.toString());
-            String encrypPw = passwordEncoder.encode(memberVO.getUpw());
-            log.info("패스워드 암호화!!@@@@"+encrypPw);
-            memberVO.setUpw(encrypPw);
-            memberVO.setFno("85");
+            loginValidator.validate(memberService.readOne(memberVO.getUid()),result);
+            if(result.hasErrors()){
+                log.info(result.getFieldError().getCode());
+                model.addAttribute("error",result.getFieldError().getCode());
+                return "signup";
+            }
+            else {
+                log.info("회원가입!!" + memberVO.toString());
+                String encrypPw = passwordEncoder.encode(memberVO.getUpw());
+                log.info("패스워드 암호화!!@@@@" + encrypPw);
+                memberVO.setUpw(encrypPw);
+                memberVO.setFno("85");
 
-            // 첫 회원가입의 ROLE은 반드시 NORMLA일 것!!
-            MemberRoleVO memberRoleVO = new MemberRoleVO();
-            memberRoleVO.setFno(memberVO.getFno());
-            memberRoleVO.setRoleName("NORMAL");
+                // 첫 회원가입의 ROLE은 반드시 NORMAL 일 것!!
+                MemberRoleVO memberRoleVO = new MemberRoleVO();
+                memberRoleVO.setFno(memberVO.getFno());
+                memberRoleVO.setRoleName("NORMAL");
 
-            //memberRoleService.createRole(memberRoleVO);
-            memberService.create(memberVO);
+                //memberRoleService.createRole(memberRoleVO);
+                memberService.create(memberVO);
+            }
         }catch (Exception ex){
             ex.printStackTrace();
         }
