@@ -56,11 +56,8 @@ public class WebCrawler {
             }
 
             return crawlContent;
-        }catch (IOException io){
+        } catch (Exception io){
             io.printStackTrace();
-            return null;
-        }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -96,7 +93,7 @@ public class WebCrawler {
 
                 }
 
-                System.out.println((i+1)+"페이지 수집 중....");
+                log.info((i+1)+"페이지 수집 중....");
                 
             }
             

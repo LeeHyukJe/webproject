@@ -19,8 +19,7 @@
             </a>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                	<a href="#" onclick="javascript:crawl()"><i class="material-icons ic-create">크롤링</i></a>
-                	<a href="#" onclick="javascript:indexing()"><i class="material-icons ic-create">크롤링 후 색인</i></a>
+                    <a href="/searchAdmin"><i class="material-icons ic-create">검색관리자</i></a>
                     <a th:if="${isLogin==null}" href="/login"><i class="material-icons ic-create">로그인</i></a>
                     <a th:if="${isLogin!=null}" href="/logout"><i class="material-icons ic-create">로그아웃</i></a>
                     <a th:if="${isLogin==null}" href="/signup"><i class="material-icons ic-create">회원가입</i></a>
@@ -95,41 +94,27 @@
 </script>
 
 <script>
-function crawl(){
-	$.ajax({
-		url:"/collectContents?collection=clien",
-		type:'get',
-		dataType:'json',
-		success:function(data){
-			
-			var source = $("#entry-template").html();
-			var template = Handlebars.compile(source);
-			
-			var html = template(data);
-			$('#contents').append(html);
-		}
-	})
+
+
+window.onload = function () {
+    $.ajax({
+        url:"/collectContents?collection=clien",
+        type:'get',
+        dataType:'json',
+        success:function(data){
+
+            var source = $("#entry-template").html();
+            var template = Handlebars.compile(source);
+
+            var html = template(data);
+            $('#contents').append(html);
+        }
+    })
 }
 
 
-// 색인하기
-function indexing(){
-	$.ajax({
-		url:"/indexing?targetUrl=https://www.clien.net/service/board/news&pageNum=5",
-		type:"get",
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-		}
-	})
-}
 
 
-// 색인에러보기
-function showErrorLog(){
-	var url="/indexing_errorlog?collection=clien";
-	window.open(url,'_blank',"scrollbars=yes, width=700, height=720");
-}
 </script>
 </body>
 </html>

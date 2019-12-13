@@ -26,10 +26,11 @@ import java.util.concurrent.*;
 public class MainController {
 
 	@GetMapping("/index")
-	public void index(HttpServletRequest request, Model model) throws Exception {
+	public void index(HttpServletRequest request, Model model) {
 		log.info("@@사용자 정보1" + request.isUserInRole("ROLE_NORMAL"));
 		if (request.getRemoteUser() != null) {
 			log.info("@@사용자 정보2" + request.getRemoteUser());
+			log.info("@@@사용자 정보3"+request.getAuthType());
 			model.addAttribute("isLogin", request.getRemoteUser());
 		}
 
@@ -41,7 +42,7 @@ public class MainController {
 
 	// 상품 등록 컨트롤러
 	@GetMapping("/item_create")
-	public String item_create() throws Exception {
+	public String item_create(){
 
 		return "item_create";
 	}

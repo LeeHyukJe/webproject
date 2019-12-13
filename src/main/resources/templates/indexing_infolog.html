@@ -4,17 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>권한 없는 페이지</title>
+    <title>에러로그</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css" integrity="sha256-G3IAYJYIQvZgPksNQDbjvxd/Ca1SfCDFwu2s2lt0oGo=" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <div>죄송합니다. 로그인을 하지 않거나 권한이 없으면 해당 페이지를 열람 할 수 없습니다. .</div>
-    <div>이전 버튼을 눌러 이전 페이지로 돌아가시거나 시스템 관리자에게 권한 재조정 요청을 하시기 바랍니다 .</div>
-    Click Login at <a th:href="@{/login}">here</a><br/>
-    Click Home at  <a th:href="@{/index}">here</a>
+    <div th:utext="${infoLog}"></div>
 </body>
 </html>
 

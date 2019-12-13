@@ -19,46 +19,47 @@ import com.leehyukje.webproject.crawal.WebCrawler;
 import com.leehyukje.webproject.search.common.ShRunner;
 
 import lombok.extern.java.Log;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 @Controller
 @Log
 public class IndexingController {
-	
-	private final WebCrawler webCrawler;
-	private final TaskExecutor taskExecutor;
-	private final ShRunner shRunner;
-	
-	@Autowired
-	public IndexingController(WebCrawler webCrawler, TaskExecutor taskExecutor, ShRunner shRunner) {
-		this.webCrawler = webCrawler;
-		this.taskExecutor = taskExecutor;
-		this.shRunner = shRunner;
-	}
 
-	@Value("${batch.path}")
-	private String executePath;
-	@Value("${crawling.path}")
-	private String crawlingPath;
-	
-	@GetMapping("/indexAjax")
-	public ResponseEntity<String> indexByJson(HttpServletRequest request) {
-		ResponseEntity<String> entity = null;
-		try {
-			CompletableFuture<String> content = webCrawler.crawlingToJson(crawlingPath,
-					5);
+    private final WebCrawler webCrawler;
+    private final TaskExecutor taskExecutor;
+    private final ShRunner shRunner;
 
-			entity = new ResponseEntity<>(content.get(), HttpStatus.OK);
-			return entity;
-		} catch (IOException e) {
-			return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-			return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-	}
+    @Autowired
+    public IndexingController(WebCrawler webCrawler, TaskExecutor taskExecutor, ShRunner shRunner) {
+        this.webCrawler = webCrawler;
+        this.taskExecutor = taskExecutor;
+        this.shRunner = shRunner;
+    }
+
+    @Value("${batch.path}")
+    private String executePath;
+    @Value("${crawling.path}")
+    private String crawlingPath;
+
+    @GetMapping("/indexAjax")
+    public ResponseEntity<String> indexByJson(HttpServletRequest request) {
+        ResponseEntity<String> entity = null;
+        try {
+            CompletableFuture<String> content = webCrawler.crawlingToJson(crawlingPath,
+                    5);
+
+            entity = new ResponseEntity<>(content.get(), HttpStatus.OK);
+            return entity;
+        } catch (IOException e) {
+            return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 //    @GetMapping("/indexing")
 //    public ResponseEntity<String> indexing(@RequestParam String targetUrl, @RequestParam int pageNum){
@@ -74,24 +75,30 @@ public class IndexingController {
 //    	}
 //    }
 
-	@GetMapping("/indexing")
-	public ResponseEntity<String> indexing(@RequestParam String targetUrl, @RequestParam int pageNum) throws Exception {
-		try {
-			CompletableFuture.runAsync(() -> {
-				try {
-					webCrawler.crawlingToFile(crawlingPath, pageNum);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			},taskExecutor).thenRunAsync(() -> {
-				log.info("크롤링 후 파일 출력 완료!");
-				log.info(shRunner.execCommand(executePath).toString());
-			});
-			return new ResponseEntity<>("success", HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
-		}
+    @GetMapping("/crawling")
+    public CompletableFuture<ResponseEntity<String>> indexing(@RequestParam String targetUrl, @RequestParam int pageNum) throws Exception {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                webCrawler.crawlingToFile(crawlingPath, pageNum);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }, taskExecutor).thenApply((str) -> {
+            log.info("크롤링 후 파일 출력 완료!");
+            //log.info(shRunner.execCommand(executePath).toString());
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        });
+    }
 
-	}
+    @GetMapping("/indexing")
+    public ResponseEntity<String> indexing() {
+
+        String indexingLog = shRunner.execCommand(executePath).get(1).toString();
+        log.info(indexingLog);
+        if(!indexingLog.equals("error"))
+        	return new ResponseEntity<>("complete", HttpStatus.OK);
+        else
+        	return new ResponseEntity<>("error",HttpStatus.OK);
+    }
 }

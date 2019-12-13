@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>검색 관리 페이지</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css"
+          integrity="sha256-G3IAYJYIQvZgPksNQDbjvxd/Ca1SfCDFwu2s2lt0oGo=" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<nav class="navbar nav-global fixed-top navbar-expand-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/index">
+            <img class="img-brand" alt="검색엔진" width="24" style="margin-right: 6px;" src="/mainPic.png">
+            중고마켓
+        </a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="#" onclick="javascript:crawling()"><i class="material-icons ic-create">크롤링</i></a>
+                <a href="#" id="indexing" onclick="javascript:indexing()"><i class="material-icons ic-create">색인</i></a>
+                <a href="#" id="showErrorLog" onclick="javascript:showLog('error')"><i class="material-icons ic-create">색인에러보기</i></a>
+                <a href="#" id="showInfoLog" onclick="javascript:showLog('info')"><i class="material-icons ic-create">색인인포보기</i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container container-main-index">
+    <h5 class="container-headline">검색 결과</h5>
+
+    <div class="categories-group">
+        <a href="javascript:result()" class="btn btn-category">검색결과보기</a>
+    </div>
+
+    <div id="contents">
+
+    </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
+
+<script id="entry-template" type="text/x-handlebars-template">
+    {{#result}}
+    <div>제목: {{TITLE}}</div>
+    <div>내용: {{CONTENT}}</div>
+    <hr>
+    {{/result}}
+
+</script>
+
+<script>
+    //검색 결과 보기
+    function result() {
+        $.ajax({
+            url: "/collectContents?collection=clien",
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                $('#contents').text("");
+                var source = $("#entry-template").html();
+                var template = Handlebars.compile(source);
+
+                var html = template(data);
+                $('#contents').append(html);
+            }
+        })
+    }
+
+
+    // 크롤링 후 SCD 파일로 만들기
+    function crawling() {
+        $.ajax({
+            url: "/crawling?targetUrl=https://www.clien.net/service/board/news&pageNum=1",
+            type: "get",
+            //dataType:'json',
+            success: function (data) {
+                console.log(data);
+                if (data == 'success')
+                    $('#indexing').css('background-color', '#28a745');
+            }
+        })
+    }
+
+    // 크롤링 데이터 색인하기
+    function indexing() {
+        $.ajax({
+            url: '/indexing',
+            type: 'get',
+            success: function (data) {
+                if (data == 'complete') {
+                    alert('색인이 완료 되었습니다.');
+                    $('#indexing').css('background-color', '');
+                }
+                else if(data == "error"){
+                    alert("색인에 문제가 발생했습니다. 로그 메시지를 확인하십시오.");
+                    $('#indexing').css('background-color', '');
+                }
+            },
+            beforeSend:function () {
+                $('#indexing').find("i").text("색인 중......");
+            },
+            complete:function(){
+                $('#indexing').find("i").text("색인");
+            }
+        })
+    }
+
+    // 색인에러보기
+    function showLog(mode) {
+        var url = "/indexing_errorlog?collection=clien&mode="+mode;
+        window.open(url, '_blank', "scrollbars=yes, width=700, height=720");
+    }
+
+</script>
+</html>
+

@@ -1,6 +1,8 @@
 package com.leehyukje.webproject.web;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -30,7 +32,7 @@ public class IndexingLogController {
 	private String indexerLogPath;
 
 	@GetMapping("/indexing_errorlog")
-	public String showErrorLog(@RequestParam String collection, Model model) {
+	public String showErrorLog(@RequestParam String collection, @RequestParam String mode, Model model) {
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
 		SimpleDateFormat format2 = new SimpleDateFormat("MM");
@@ -43,13 +45,20 @@ public class IndexingLogController {
 		log.info("현재월"+currentMonth);
 		log.info("현재년도월일"+currentYearMonthDay);
 		
-		
-		Path path = Paths.get(indexerLogPath,collection,currentYear,currentMonth,currentYearMonthDay+"_error.log");
+
+		Path path = Paths.get(indexerLogPath,collection,currentYear,currentMonth,currentYearMonthDay+"_"+mode+".log");
 		File file = new File(path.toString());
-		
-		
-		String errorLog = logService.showIndexingErrorLog(file);
+
+
+		String errorLog = logService.showIndexingLog(file);
+		log.info("에러로그"+errorLog);
 		model.addAttribute("errorLog",errorLog);
+
+
 		return "indexing_errorlog";
 	}
+
+
+
+
 }

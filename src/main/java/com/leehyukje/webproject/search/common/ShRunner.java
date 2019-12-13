@@ -31,11 +31,16 @@ public class ShRunner {
         try {
             if (reader != null) {
                 while ((line = reader.readLine()) != null) {
+                    if(line.contains("Error : ")){
+                        throw new IOException();
+                    }
                     stringBuilder.append(line).append("\n");
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            map.put(1,"error");
+            return map;
         }
 
         try {

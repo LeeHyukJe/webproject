@@ -65,7 +65,7 @@ public class LoginController {
             memberVO.setUpw(encrypPw);
             memberVO.setFno("85");
 
-            // 첫 로그인의 ROLE은 반드시 NORMLA일 것!!
+            // 첫 회원가입의 ROLE은 반드시 NORMLA일 것!!
             MemberRoleVO memberRoleVO = new MemberRoleVO();
             memberRoleVO.setFno(memberVO.getFno());
             memberRoleVO.setRoleName("NORMAL");

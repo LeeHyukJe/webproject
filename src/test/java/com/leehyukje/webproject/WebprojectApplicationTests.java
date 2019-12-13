@@ -10,11 +10,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import lombok.extern.java.Log;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,6 +25,7 @@ import com.leehyukje.webproject.search.common.ShRunner;
 
 //@SpringBootTest
 @RunWith(SpringRunner.class)
+@Log
 class WebprojectApplicationTests {
 	
 	
@@ -35,9 +39,11 @@ class WebprojectApplicationTests {
 //
 //        System.out.println(map);
 //	}
+
+
 	
 	@Test
-	public void path() throws Exception{
+	public void path(){
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
 		SimpleDateFormat format2 = new SimpleDateFormat("MM");
@@ -48,7 +54,17 @@ class WebprojectApplicationTests {
 		String collection = "clien";
 		
 		Path path = Paths.get("C:\\wisenut\\sf-1\\log\\indexer\\",collection,currentYear,currentMonth,currentYearMonthDay+"_error.log");
-		assertThat(path.toString(),is("C:\\wisenut\\sf-1\\log\\indexer\\clien\\2019\\12\\20191211_error.log"));
+		assertThat(path.toString(),is("C:\\wisenut\\sf-1\\log\\indexer\\clien\\2019\\12\\20191212_error.log"));
+	}
+
+	@Test
+	public void commandExecuteTest(){
+
+		ShRunner shRunner = new ShRunner();
+		String executePath="C:\\wisenut\\sf-1\\batch\\static\\stc_clien.cmd";
+		String indexngLog = shRunner.execCommand(executePath).get(1).toString();
+		log.info(indexngLog);
+		assertThat(indexngLog,is("error"));
 	}
 
 }
