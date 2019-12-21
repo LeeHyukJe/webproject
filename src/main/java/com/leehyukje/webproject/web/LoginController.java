@@ -6,6 +6,7 @@ import com.leehyukje.webproject.persistence.MemberDAO;
 import com.leehyukje.webproject.service.MemberRoleService;
 import com.leehyukje.webproject.service.MemberService;
 import com.leehyukje.webproject.validator.LoginValidator;
+import com.leehyukje.webproject.validator.ValidationException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,7 +68,7 @@ public class LoginController {
     @PostMapping("/join")
     public String joinPost(@ModelAttribute @Validated MemberVO memberVO, BindingResult result, Model model){
         try{
-            loginValidator.validate(memberService.readOne(memberVO.getUid()),result);
+
             if(result.hasErrors()){
                 log.info(result.getFieldError().getCode());
                 model.addAttribute("error",result.getFieldError().getCode());
@@ -88,6 +89,12 @@ public class LoginController {
                 //memberRoleService.createRole(memberRoleVO);
                 memberService.create(memberVO);
             }
+
+        }catch (ValidationException valid){
+            log.info("[signup error]"+valid.getErrors()[0].getDefaultMessage());
+            valid.printStackTrace();
+            model.addAttribute("error",valid.getErrors()[0].getDefaultMessage());
+            return "signup";
         }catch (Exception ex){
             ex.printStackTrace();
         }

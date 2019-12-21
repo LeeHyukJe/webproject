@@ -119,6 +119,8 @@ public class WebCrawler {
         JsonGenerator generator = jsonFactory.createGenerator(stringWriter);
         generator.useDefaultPrettyPrinter();
 
+        generator.writeStartObject();
+        generator.writeFieldName("result");
         generator.writeStartArray();
 
         for(int i=0;i<pageNum;i++) { //페이지
@@ -155,6 +157,7 @@ public class WebCrawler {
             log.info((i+1)+"페이지 수집 중....");
         }
         generator.writeEndArray();
+        generator.writeEndObject();
 
         generator.close();
 

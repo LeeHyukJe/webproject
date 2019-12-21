@@ -4,19 +4,27 @@ package com.leehyukje.webproject;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+import java.lang.reflect.Member;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.leehyukje.webproject.domain.MemberRoleVO;
+import com.leehyukje.webproject.domain.MemberVO;
+import com.leehyukje.webproject.persistence.MemberDAO;
+import com.leehyukje.webproject.service.MemberService;
+import com.leehyukje.webproject.service.MemberServiceImpl;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +49,9 @@ class WebprojectApplicationTests {
 //
 //        System.out.println(map);
 //	}
+
+
+
 
 
 	
@@ -75,6 +86,29 @@ class WebprojectApplicationTests {
 		Pattern regex = Pattern.compile(targetRex);
 		Matcher matcher = regex.matcher("lims2733@naver.com");
 		assertThat(matcher.find(),is(true));
+	}
+
+	@Test
+	public void validExceptionTest() throws Exception {
+		MemberVO memberVO = new MemberVO();
+		MemberService memberService = new MemberServiceImpl(new MemberDAO() {
+			@Override
+			public MemberVO readOne(String uid) throws Exception {
+				return null;
+			}
+
+			@Override
+			public List<MemberRoleVO> readRoleList(String fno) throws Exception {
+				return null;
+			}
+
+			@Override
+			public void create(MemberVO memberVO) throws Exception {
+
+			}
+		});
+		memberVO.setUid("user1");
+		memberService.create(memberVO);
 	}
 
 }

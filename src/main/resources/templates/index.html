@@ -11,23 +11,23 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <nav class="navbar nav-global fixed-top navbar-expand-sm">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img class="img-brand" alt="검색엔진" width="24" style="margin-right: 6px;" src="/mainPic.png">
-                중고마켓
-            </a>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="/searchAdmin"><i class="material-icons ic-create">검색관리자</i></a>
-                    <a th:if="${isLogin==null}" href="/login"><i class="material-icons ic-create">로그인</i></a>
-                    <a th:if="${isLogin!=null}" href="/logout"><i class="material-icons ic-create">로그아웃</i></a>
-                    <a th:if="${isLogin==null}" href="/signup"><i class="material-icons ic-create">회원가입</i></a>
-                    <a href="/item_create"><i class="material-icons ic-create">create</i></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar nav-global fixed-top navbar-expand-sm">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img class="img-brand" alt="검색엔진" width="24" style="margin-right: 6px;" src="/mainPic.png">
+            중고마켓
+        </a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="/searchAdmin"><i class="material-icons ic-create">검색관리자</i></a>
+                <a th:if="${isLogin==null}" href="/login"><i class="material-icons ic-create">로그인</i></a>
+                <a th:if="${isLogin!=null}" href="/logout"><i class="material-icons ic-create">로그아웃</i></a>
+                <a th:if="${isLogin==null}" href="/signup"><i class="material-icons ic-create">회원가입</i></a>
+                <a href="/item_create"><i class="material-icons ic-create">create</i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container container-main-index">
     <h5 class="container-headline">검색 결과</h5>
@@ -37,28 +37,28 @@
         <a href="#" onClick="javascript:showErrorLog()" class="btn btn-category">색인에러로그</a>
     </div>
 
-<!--  
-    <ul class="list-products row">
-        <li class="list-products-item col-12 col-md-4 col-lg-3">
-            <a href="detail.html">
-                <div class="card">
-                    <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
-                    <div class="card-body">
-                        <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
-                        <h6 class="price">8,500,000원</h6>
+    <!--
+        <ul class="list-products row">
+            <li class="list-products-item col-12 col-md-4 col-lg-3">
+                <a href="detail.html">
+                    <div class="card">
+                        <div class="card-img-top" style="background: url('https://dnvefa72aowie.cloudfront.net/origin/article/201910/56c82f70d5115996bbc4f01299353545c89f4e3551264a7f40baa6fb77f76d82.webp?q=95&s=1440x1440&t=inside') no-repeat center; background-size: cover; height: 240px"></div>
+                        <div class="card-body">
+                            <h5 class="title">티볼리 1인신조차량 무사고차량 판매해요</h5>
+                            <h6 class="price">8,500,000원</h6>
 
-                        <div class="text-muted">
-                            <h6 class="category">차량</h6>
-                            <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
+                            <div class="text-muted">
+                                <h6 class="category">차량</h6>
+                                <time datetime='2019-08-20T08:30:00Z'>2개월전</time>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        </li>
-    </ul>
---> 
+                </a>
+            </li>
+        </ul>
+    -->
     <div id="contents">
-    	
+
     </div>
 </div>
 
@@ -86,31 +86,31 @@
 
 </script>
 <script id="entry-template" type="text/x-handlebars-template">
-		{{#result}}
-    	<div>제목: {{TITLE}}</div>
-    	<div>내용: {{CONTENT}}</div>
-		<hr>
-    	{{/result}}
+    {{#result}}
+<div>제목: {{TITLE}}</div>
+<div>내용: {{CONTENT}}</div>
+<hr>
+{{/result}}
 </script>
 
 <script>
 
 
-window.onload = function () {
-    $.ajax({
-        url:"/collectContents?collection=clien",
-        type:'get',
-        dataType:'json',
-        success:function(data){
+    window.onload = function () {
+        $.ajax({
+            url:"/collectContents?collection=clien",
+            type:'get',
+            dataType:'json',
+            success:function(data){
 
-            var source = $("#entry-template").html();
-            var template = Handlebars.compile(source);
+                var source = $("#entry-template").html();
+                var template = Handlebars.compile(source);
 
-            var html = template(data);
-            $('#contents').append(html);
-        }
-    })
-}
+                var html = template(data);
+                $('#contents').append(html);
+            }
+        })
+    }
 
 
 

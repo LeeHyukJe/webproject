@@ -21,7 +21,6 @@ public class LoginValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"uid","이메일은 필수 항목입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"upw","비밀번호는 필수 항목입니다.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"uname","사용자 이름은 필수 항목입니다.");
-
         MemberVO memberVO = (MemberVO) target;
         // 아이디가 이메일 형식인지 정규식으로 일치판단하기
         String targetRex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+";
